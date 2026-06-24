@@ -22,7 +22,15 @@ Each skill lives in its own subdirectory under `skills/`. A typical skill should
 
 ## Available Skills
 
-No skills have been added yet.
+### deep-reading-assistant
+
+Generates complete Chinese Markdown reading notes after reading a book, manuscript, PDF, EPUB, text export, or existing reading-note draft. It works in separate passes: outline, recommendation, verified author introduction, chapter synopsis, section-by-section long-form notes, conclusion, and final Markdown integration.
+
+Example prompt:
+
+```text
+Use $deep-reading-assistant to read this book and create a complete Chinese Markdown reading note.
+```
 
 When a new skill is added, document it here with:
 
@@ -39,8 +47,12 @@ dk_skills/
   CHANGELOG.md
   .gitignore
   skills/
-    <skill-name>/
+    deep-reading-assistant/
       SKILL.md
+      agents/
+        openai.yaml
+      references/
+        final-note-format.md
 ```
 
 ## Maintenance
