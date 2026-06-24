@@ -1,0 +1,67 @@
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+secrets/
+credentials/
+*.secret.*
+
+# Codex and agent local state
+.codex/
+.agents/
+*.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.pnpm-store/
+
+# Generated outputs and local exports
+outputs/
+output/
+exports/
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# Documents that may contain private working material
+*.docx
+*.pptx
+*.xlsx
+*.pdf
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
