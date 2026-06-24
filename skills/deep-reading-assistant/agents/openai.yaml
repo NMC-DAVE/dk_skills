@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deep Reading Assistant"
+  short_description: "Generate complete Chinese Markdown book notes"
+  default_prompt: "Use $deep-reading-assistant to read this book and create a complete Chinese Markdown reading note."
