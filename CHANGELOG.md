@@ -8,5 +8,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Added `deep-reading-assistant`, a workflow skill for generating complete Chinese Markdown reading notes from books and long-form source material.
 - Initialized the skills workspace structure.
 - Added project documentation, changelog, Git ignore rules, and the `skills/` directory placeholder.
