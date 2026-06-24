@@ -32,6 +32,11 @@ dist/
 build/
 *.egg-info/
 
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
 # Node
 node_modules/
 npm-debug.log*
