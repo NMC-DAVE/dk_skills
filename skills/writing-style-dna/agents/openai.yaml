@@ -1,0 +1,4 @@
+interface:
+  display_name: "文风DNA"
+  short_description: "从样文提取写作风格并复刻，去除AI味"
+  default_prompt: "Use $writing-style-dna to extract the writing style from these sample documents into a style profile."
