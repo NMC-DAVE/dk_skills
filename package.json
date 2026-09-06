@@ -1,0 +1,20 @@
+{
+  "name": "dk-skills-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal Agent Skills catalog with selective installation through npx skills.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NMC-DAVE/dk_skills.git"
+  },
+  "scripts": {
+    "validate": "python scripts/validate_skill_catalog.py",
+    "skills:list": "npx --yes skills@1 add . --list",
+    "test:paper-deep-reader": "python -m pytest -q skills/paper-deep-reader/tests",
+    "test": "npm run validate && npm run test:paper-deep-reader",
+    "ci": "npm test && npm run skills:list"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

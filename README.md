@@ -1,76 +1,188 @@
 # dk_skills
 
-Personal Codex skills workspace for developing, maintaining, and publishing daily-work skills.
+个人常用 Agent Skills 仓库。每个技能均独立放在 `skills/<skill-name>/` 下，可通过 [`npx skills`](https://github.com/vercel-labs/skills) **按需安装、更新、查看和删除**，无需一次安装整个 `skills/` 目录。
 
-## Prerequisites
+## 快速开始
 
-- Codex or another compatible agent runtime that can load local skills.
-- Git for version control.
-- GitHub CLI (`gh`) for repository authentication and publishing.
-- PowerShell on Windows for the local maintenance commands used in this workspace.
+### 1. 查看仓库中可用的技能
 
-## Installation
+```bash
+npx skills add NMC-DAVE/dk_skills --list
+```
 
-Clone the repository, then point your Codex skills path or skill installer workflow at the `skills/` directory.
+### 2. 只安装一个技能
 
-```powershell
-git clone <your-github-repo-url>
+```bash
+npx skills add NMC-DAVE/dk_skills --skill paper-deep-reader
+```
+
+命令会检测本机支持的 Agent，并让你选择安装位置。也可以显式指定 Agent 和作用域：
+
+```bash
+# 全局安装到 Pi
+npx skills add NMC-DAVE/dk_skills --skill paper-deep-reader -g -a pi
+
+# 全局安装到 Codex
+npx skills add NMC-DAVE/dk_skills --skill paper-deep-reader -g -a codex
+
+# 安装到当前项目的 Claude Code
+npx skills add NMC-DAVE/dk_skills --skill paper-deep-reader -a claude-code
+```
+
+### 3. 一次选择多个技能
+
+重复使用 `--skill`，只会安装点名的技能：
+
+```bash
+npx skills add NMC-DAVE/dk_skills \
+  --skill paper-deep-reader \
+  --skill writing-style-dna
+```
+
+不传 `--skill` 时，CLI 会在交互界面中让你选择技能。若不想安装全部技能，请不要使用 `--all` 或 `--skill '*'`。
+
+## 技能管理
+
+### 查看已安装技能
+
+```bash
+# 当前项目
+npx skills list
+
+# 全局技能
+npx skills list -g
+
+# 只看某个 Agent 的全局技能
+npx skills list -g -a pi
+```
+
+### 更新技能
+
+```bash
+# 交互式选择作用域并更新
+npx skills update
+
+# 只更新指定技能
+npx skills update paper-deep-reader
+
+# 只更新全局安装的指定技能
+npx skills update paper-deep-reader -g
+
+# 更新当前项目中的全部技能
+npx skills update -p
+```
+
+### 删除技能
+
+```bash
+# 交互式选择要删除的技能
+npx skills remove
+
+# 删除当前项目中的指定技能
+npx skills remove paper-deep-reader
+
+# 从 Pi 的全局目录删除指定技能
+npx skills remove paper-deep-reader -g -a pi
+```
+
+> `npx skills remove --all` 会删除所选作用域内的全部技能，请谨慎使用。
+
+### 临时使用但不安装
+
+```bash
+npx skills use NMC-DAVE/dk_skills@paper-deep-reader
+```
+
+## 本地仓库安装
+
+开发或调试本仓库时，可以从本地路径安装，同样支持选择性安装：
+
+```bash
+git clone https://github.com/NMC-DAVE/dk_skills.git
 cd dk_skills
+
+npx skills add . --list
+npx skills add . --skill paper-deep-reader
 ```
 
-Each skill lives in its own subdirectory under `skills/`. A typical skill should include a `SKILL.md` entrypoint and any supporting `scripts/`, `templates/`, `assets/`, or `examples/` folders it needs.
+也可以直接使用 GitHub 中某个技能的目录 URL：
 
-## Available Skills
-
-### deep-reading-assistant
-
-Generates complete Chinese Markdown reading notes after reading a book, manuscript, PDF, EPUB, text export, or existing reading-note draft. It works in separate passes: outline, recommendation, verified author introduction, chapter synopsis, section-by-section long-form notes, conclusion, and final Markdown integration.
-
-Example prompt:
-
-```text
-Use $deep-reading-assistant to read this book and create a complete Chinese Markdown reading note.
+```bash
+npx skills add https://github.com/NMC-DAVE/dk_skills/tree/main/skills/paper-deep-reader
 ```
 
-### writing-style-dna（文风DNA）
+## 可用技能
 
-从用户提供的少量样文（领导讲话、公文、论文、工作总结、评论文章等，通常 2-10 篇）中提取可复用的写作风格档案（风格DNA），再按该档案进行 AI 写作或改写，实现风格复刻并去除 AI 味。内置四层分析产物（语言DNA / 结构模板 / 立场与认知 / 排版规范）、表述口径库、表态等级守恒和体裁适配的去AI味白名单（公文编号、讲话排比、学术惯例等豁免）。
+| 技能 | 用途 | 主要依赖 |
+| --- | --- | --- |
+| [`paper-deep-reader`](skills/paper-deep-reader/) | 深度阅读单篇科研论文，整理元数据、RIS/ENW、页级证据、模块化笔记与中文综合报告 | Python 3.10+；推荐 PyMuPDF，可选 Poppler；远程来源和权威元数据查询需要网络 |
+| [`deep-reading-assistant`](skills/deep-reading-assistant/) | 阅读书籍、手稿、PDF、EPUB 或文本，生成完整中文 Markdown 读书笔记 | 取决于源文件格式的读取工具；作者资料核验通常需要网络 |
+| [`writing-style-dna`](skills/writing-style-dna/) | 从少量样文提取可复用的文风档案，并按档案写作或改写、减少 AI 痕迹 | 无强制外部依赖 |
 
-- 触发场景：分析文风、提取写作风格、给某位领导或单位建立风格档案、按样文风格起草材料、把稿件改写得像某人写的、改写时保留口径、去 AI 味
-- 所需工具：无外部依赖；仅当用户明确要求且内容公开发表时才联网补充语料
-- 示例：
+## 环境要求
 
-```text
-请用 $writing-style-dna 分析这几篇讲话稿，建一个风格档案。
-请按这个风格档案，起草一篇在季度工作会上的讲话。
-请按这个风格档案把这篇汇报改写一遍，口径别动，去掉AI味。
+- Node.js 18+（用于运行 `npx skills`）
+- Git（安装 GitHub 仓库来源时使用）
+- 目标 Agent，例如 Pi、Codex、Claude Code、Cursor 等
+- 个别技能的额外依赖见其 `SKILL.md`
+
+`npx skills` 支持项目级和全局安装。常用 Agent 的目录示例：
+
+| Agent | `--agent` | 项目级目录 | 全局目录 |
+| --- | --- | --- | --- |
+| Pi | `pi` | `.pi/skills/` | `~/.pi/agent/skills/` |
+| Codex | `codex` | `.agents/skills/` | `~/.codex/skills/` |
+| Claude Code | `claude-code` | `.claude/skills/` | `~/.claude/skills/` |
+| Cursor | `cursor` | `.agents/skills/` | `~/.cursor/skills/` |
+
+## 仓库维护
+
+```bash
+# 校验技能目录、SKILL.md frontmatter、本地链接和 Agent 元数据
+npm run validate
+
+# 使用 npx skills 验证本地仓库发现结果
+npm run skills:list
+
+# 运行当前自动化测试
+npm test
+
+# 执行完整 CI 检查
+npm run ci
 ```
 
-When a new skill is added, document it here with:
+新增技能时应：
 
-- Skill name
-- Purpose and trigger phrases
-- Required tools or credentials
-- Example usage
+1. 创建 `skills/<skill-name>/SKILL.md`。
+2. 在 YAML frontmatter 中填写与目录同名的 `name` 和清晰的 `description`。
+3. 将脚本、模板、参考资料和测试保存在该技能目录内，保持技能自包含。
+4. 在本 README 的技能表和 `CHANGELOG.md` 中登记。
+5. 运行 `npm run ci`，确认 `npx skills` 能发现该技能。
 
-## Project Structure
+更多维护规则见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+
+## 仓库结构
 
 ```text
 dk_skills/
-  README.md
-  CHANGELOG.md
-  .gitignore
+  .github/workflows/validate.yml
+  package.json
+  scripts/
+    validate_skill_catalog.py
   skills/
     deep-reading-assistant/
       SKILL.md
-      agents/
-        openai.yaml
+    paper-deep-reader/
+      SKILL.md
       references/
-        final-note-format.md
+      scripts/
+      tests/
+    writing-style-dna/
+      SKILL.md
+      references/
+      templates/
 ```
 
-## Maintenance
+## 安全说明
 
-- Keep sensitive files, credentials, generated caches, and local exports out of Git.
-- Update `CHANGELOG.md` whenever a skill is added, changed, or removed.
-- Keep each skill self-contained so it can be copied, reviewed, or published independently.
+安装或运行任何第三方技能前，应先检查其 `SKILL.md` 和附带脚本。不要把凭据、私有文档、生成输出或本地缓存提交到仓库。

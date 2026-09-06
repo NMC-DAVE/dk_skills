@@ -1,0 +1,4 @@
+interface:
+  display_name: "Paper Deep Reader"
+  short_description: "深度阅读论文并生成 EndNote 与中文证据笔记"
+  default_prompt: "Use $paper-deep-reader to ingest this paper, prepare RIS and ENW records, build page-level evidence, and write modular plus consolidated Chinese deep-reading notes."

@@ -1,0 +1,49 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Validate catalog and run tests
+        run: npm test
+
+      - name: Verify npx skills discovery
+        run: npm run skills:list
+
+      - name: Verify selective installation
+        shell: bash
+        run: |
+          install_root="$(mktemp -d)"
+          cd "$install_root"
+          npx --yes skills@1 add "$GITHUB_WORKSPACE" \
+            --skill paper-deep-reader \
+            --agent pi \
+            --yes \
+            --copy
+          test -f .pi/skills/paper-deep-reader/SKILL.md
+          test "$(find .pi/skills -mindepth 1 -maxdepth 1 -type d | wc -l)" -eq 1
