@@ -6,9 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- Migrated `idl-programming` helpers, catalog generator, and tests from Python to Node.js built-ins. Installed IDL skills now require only Node.js and licensed IDL; command capabilities and structured results remain unchanged.
+
 ### Added
 
-- Added `idl-programming`, derived from vscode-idl 6.2.2: standalone runtime detection, compact official routine index, local-help and project-routine lookup, version-aware coding guidance, compilation and assertion-based test execution. Includes standard-library-only Python helpers, mock-runtime tests, opt-in licensed IDL integration tests, and selective installation checks.
+- Added `idl-programming`, derived from vscode-idl 6.2.2: standalone runtime detection, compact official routine index, local-help and project-routine lookup, version-aware coding guidance, compilation and assertion-based test execution. Includes Node.js built-in-only helpers, mock-runtime tests, opt-in licensed IDL integration tests, and selective installation checks.
 
 - Added `paper-deep-reader`, a single-paper deep-reading workflow with canonical PDF organization, RIS/ENW export, page-level evidence, modular Chinese notes, validation scripts, and tests.
 - Added selective installation and lifecycle-management documentation for `npx skills`, including project/global and agent-specific examples.

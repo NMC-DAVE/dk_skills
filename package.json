@@ -13,7 +13,7 @@
     "test:paper-deep-reader": "python -m pytest -q skills/paper-deep-reader/tests",
     "test": "npm run validate && npm run test:paper-deep-reader && npm run test:idl-programming",
     "ci": "npm test && npm run skills:list",
-    "test:idl-programming": "python -m pytest -q skills/idl-programming/tests"
+    "test:idl-programming": "node --test skills/idl-programming/tests/idl_tools.test.mjs skills/idl-programming/tests/idl_integration.test.mjs"
   },
   "engines": {
     "node": ">=18"

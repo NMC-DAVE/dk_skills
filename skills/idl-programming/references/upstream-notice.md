@@ -6,7 +6,7 @@ Derived from https://github.com/interactive-data-language/vscode-idl, package ve
 - Discovery design: libs/mcp/language-server-tools/src/lib/globals/register-mcp-tool-search-for-routine.ts and register-mcp-tool-get-routine-docs.ts.
 - Index: resources/idl/routines/routines.json; retained named idl/internal entries with /idl/ links, deduplicated by lowercase name and routine type. Source SHA-256 is recorded in routine-index.json.
 
-Regenerate the snapshot with: python scripts/build_catalog.py <upstream-checkout> --output references/routine-index.json
+Regenerate the snapshot with: node scripts/build_catalog.mjs <upstream-checkout> --output references/routine-index.json
 
 Upstream resources are development inputs only. Installed skills do not require that checkout. The full proprietary IDL help and standard-library source are read from the local licensed installation and are not redistributed here.
 

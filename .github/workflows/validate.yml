@@ -56,4 +56,4 @@ jobs:
             --copy
           test -f .agents/skills/idl-programming/SKILL.md
           test "$(find .agents/skills -mindepth 1 -maxdepth 1 -type d | wc -l)" -eq 1
-          python .agents/skills/idl-programming/scripts/idl_tools.py search where --type Function
+          node .agents/skills/idl-programming/scripts/idl_tools.mjs search where --type Function

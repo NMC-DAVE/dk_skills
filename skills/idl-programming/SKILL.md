@@ -5,7 +5,7 @@ description: 根据任务描述和项目上下文编写、修改、解释或调�
 
 # IDL 编程
 
-使用本机 IDL 和官方文档，将任务描述转为可运行的 `.pro` 代码。默认中文说明，保留用户已有项目的组织和编码约定。不要把其他语言的语法、API 或数组行为套用到 IDL。
+使用本机 IDL 和官方文档，将任务描述转为可运行的 `.pro` 代码。辅助脚本使用 Node.js 18+ 内置模块，不需要 Python、npm 依赖安装或构建步骤。默认中文说明，保留用户已有项目的组织和编码约定。不要把其他语言的语法、API 或数组行为套用到 IDL。
 
 ## 工作流程
 
@@ -14,7 +14,7 @@ description: 根据任务描述和项目上下文编写、修改、解释或调�
 1. 探测当前运行时：
 
    ```bash
-   python scripts/idl_tools.py doctor
+   node scripts/idl_tools.mjs doctor
    ```
 
    每个任务先核对实际版本、安装目录、帮助目录和运行能力。必要时在子命令后加 `--idl "<executable>"`。不要把 9.3 或任何安装路径写死。探测失败时仍可检索离线索引和项目源码，但不得宣称代码已通过编译或执行。
@@ -22,9 +22,9 @@ description: 根据任务描述和项目上下文编写、修改、解释或调�
 2. 读取当前任务的输入、已有代码和项目约定，明确数组维度、单位、缺测值、输出与预期结果；关键输入缺失时询问。优先检索官方 IDL 与当前项目例程：
 
    ```bash
-   python scripts/idl_tools.py search "interpol" --project "<project>"
-   python scripts/idl_tools.py search "Fourier transform" --text
-   python scripts/idl_tools.py docs where --type Function
+   node scripts/idl_tools.mjs search "interpol" --project "<project>"
+   node scripts/idl_tools.mjs search "Fourier transform" --text
+   node scripts/idl_tools.mjs docs where --type Function
    ```
 
    索引仅帮助发现例程，不能证明它在本机可用。对选中的例程和关键词读取文档，确认函数/过程、参数、返回值和版本历史。同名例程有歧义时按类型与来源选择，不自动使用第一个结果。按需阅读 [函数与版本检索](references/routine-discovery.md)。只有用户点名其他库时才按其路径检索；不要默认扫描全部 `!PATH`。ENVI 或付费模块的安装与许可不能从 IDL 可用性推定。
@@ -34,8 +34,8 @@ description: 根据任务描述和项目上下文编写、修改、解释或调�
 4. 编译，再用合成数据或小样本运行带断言的最小测试：
 
    ```bash
-   python scripts/idl_tools.py check "<solution.pro>" --cwd "<project>"
-   python scripts/idl_tools.py run "<solution.pro>" "<test.pro>" --entry test_solution --cwd "<project>"
+   node scripts/idl_tools.mjs check "<solution.pro>" --cwd "<project>"
+   node scripts/idl_tools.mjs run "<solution.pro>" "<test.pro>" --entry test_solution --cwd "<project>"
    ```
 
    `check` 不执行主程序或任务入口。`run` 的入口为无参数过程，参数与结果断言放入测试过程。辅助脚本不是 IDL linter，编译也不证明数值正确。按 [验证方法](references/validation.md) 检查正常结果、边界和错误路径。完整任务按用户要求执行；不要为最小测试启动长计算或覆盖原始数据。
