@@ -1,0 +1,4 @@
+interface:
+  display_name: "IDL 编程"
+  short_description: "按本机 IDL 版本检索例程，生成科学计算代码并编译与运行最小测试"
+  default_prompt: "Use $idl-programming to implement this task in IDL, verify routines against my installed version, and compile and test the result."

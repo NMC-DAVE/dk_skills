@@ -47,3 +47,13 @@ jobs:
             --copy
           test -f .pi/skills/paper-deep-reader/SKILL.md
           test "$(find .pi/skills -mindepth 1 -maxdepth 1 -type d | wc -l)" -eq 1
+          idl_install_root="$(mktemp -d)"
+          cd "$idl_install_root"
+          npx --yes skills@1 add "$GITHUB_WORKSPACE" \
+            --skill idl-programming \
+            --agent codex \
+            --yes \
+            --copy
+          test -f .agents/skills/idl-programming/SKILL.md
+          test "$(find .agents/skills -mindepth 1 -maxdepth 1 -type d | wc -l)" -eq 1
+          python .agents/skills/idl-programming/scripts/idl_tools.py search where --type Function

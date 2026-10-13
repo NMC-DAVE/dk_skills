@@ -11,6 +11,7 @@
 secrets/
 credentials/
 *.secret.*
+materials/
 
 # Codex and agent local state
 .codex/

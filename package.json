@@ -11,8 +11,9 @@
     "validate": "python scripts/validate_skill_catalog.py",
     "skills:list": "npx --yes skills@1 add . --list",
     "test:paper-deep-reader": "python -m pytest -q skills/paper-deep-reader/tests",
-    "test": "npm run validate && npm run test:paper-deep-reader",
-    "ci": "npm test && npm run skills:list"
+    "test": "npm run validate && npm run test:paper-deep-reader && npm run test:idl-programming",
+    "ci": "npm test && npm run skills:list",
+    "test:idl-programming": "python -m pytest -q skills/idl-programming/tests"
   },
   "engines": {
     "node": ">=18"

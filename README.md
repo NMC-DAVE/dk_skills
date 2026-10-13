@@ -29,6 +29,14 @@ npx skills add NMC-DAVE/dk_skills --skill paper-deep-reader -g -a codex
 npx skills add NMC-DAVE/dk_skills --skill paper-deep-reader -a claude-code
 ```
 
+IDL 编程技能可独立安装，运行时需要 Python 3.10+ 和已许可的本机 IDL；无需 VSCode、Copilot 或 MCP：
+
+```bash
+npx skills add NMC-DAVE/dk_skills --skill idl-programming -g -a codex
+```
+
+在 Agent 中使用 `$idl-programming` 描述任务即可。技能会检测实际 IDL 版本，查阅本机帮助和项目例程，生成 `.pro`，并默认编译和运行带断言的最小测试。IDL 不在当前进程 PATH 时会尝试 Windows 系统/用户 PATH，也可显式指定可执行文件。
+
 ### 3. 一次选择多个技能
 
 重复使用 `--skill`，只会安装点名的技能：
@@ -116,6 +124,7 @@ npx skills add https://github.com/NMC-DAVE/dk_skills/tree/main/skills/paper-deep
 | 技能 | 用途 | 主要依赖 |
 | --- | --- | --- |
 | [`paper-deep-reader`](skills/paper-deep-reader/) | 深度阅读单篇科研论文，整理元数据、RIS/ENW、页级证据、模块化笔记与中文综合报告 | Python 3.10+；推荐 PyMuPDF，可选 Poppler；远程来源和权威元数据查询需要网络 |
+| [`idl-programming`](skills/idl-programming/) | 按本机版本编写、修改和调试 IDL 科学计算代码，检索官方/项目例程并编译和运行最小测试 | Python 3.10+ 标准库；已许可的本机 IDL（本机集成验收使用 9.3）；优先本机帮助 |
 | [`deep-reading-assistant`](skills/deep-reading-assistant/) | 阅读书籍、手稿、PDF、EPUB 或文本，生成完整中文 Markdown 读书笔记 | 取决于源文件格式的读取工具；作者资料核验通常需要网络 |
 | [`writing-style-dna`](skills/writing-style-dna/) | 从少量样文提取可复用的文风档案，并按档案写作或改写、减少 AI 痕迹 | 无强制外部依赖 |
 
@@ -150,6 +159,8 @@ npm test
 # 执行完整 CI 检查
 npm run ci
 ```
+
+IDL 单元测试不需要 IDL 安装，真实运行时测试默认跳过。需要本机集成测试时，在当前 shell 设置 `DK_IDL_EXECUTABLE` 为实际 IDL 可执行文件路径，再运行 `npm run test:idl-programming`。测试使用临时目录和合成数据。
 
 新增技能时应：
 
